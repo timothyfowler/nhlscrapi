@@ -1,4 +1,6 @@
 
+from builtins import str
+from builtins import object
 import requests
 
 class NHLCn(object):

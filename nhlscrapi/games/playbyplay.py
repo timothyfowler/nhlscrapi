@@ -1,4 +1,5 @@
 
+from builtins import object
 from nhlscrapi._tools import build_enum
 
 from nhlscrapi.scrapr.rtss import RTSS
@@ -102,11 +103,11 @@ class PlayByPlay(RepScrWrap):
         return self.cum_stats
         
     def __process(self, play, d, meth):
-        for name, m in d.iteritems():
+        for name, m in list(d.items()):
             getattr(m, meth)(play)
 
     def __init_cs_teams(self):
         teams = [ self.matchup['home'], self.matchup['away'] ]
-        for _, cs in self.cum_stats.items():
+        for _, cs in list(self.cum_stats.items()):
             cs.initialize_teams(teams)
   

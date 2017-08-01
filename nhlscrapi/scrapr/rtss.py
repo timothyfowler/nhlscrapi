@@ -1,5 +1,7 @@
 
 # for the play parser
+from builtins import str
+from builtins import object
 import nhlscrapi.constants as c
 from nhlscrapi._tools import to_int
 from nhlscrapi.scrapr.eventparser import event_type_mapper, parse_event_desc

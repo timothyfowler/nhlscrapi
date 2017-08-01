@@ -1,20 +1,24 @@
+from __future__ import division
 
+from builtins import range
+from past.utils import old_div
+from builtins import object
 from abc import ABCMeta, abstractmethod
 
 from nhlscrapi.games import events as EV
 from nhlscrapi.games.events import EventFactory as EF
 
 from nhlscrapi.games.playbyplay import Strength as St
+from future.utils import with_metaclass
 
 # base class for accumulators
-class AccumulateStats(object):
+class AccumulateStats(with_metaclass(ABCMeta, object)):
     """
     Base class for accumulator classes. These classes keep tallies of specified events and
     are updated each time a play from :py:class:`.PlayByPlay` is processed. Examples
     include :py:class:`.ShotCt` and :py:class:`.Score`. This class is not intended to be
     used directly.
     """
-    __metaclass__ = ABCMeta
   
     def __init__(self):
         self.total = { }
@@ -34,14 +38,13 @@ class AccumulateStats(object):
         pass
 
 
-class TeamIncrementor(AccumulateStats):
+class TeamIncrementor(with_metaclass(ABCMeta, AccumulateStats)):
     """
     Accumulator base class for team vs team stats such as score, shot count et c.
     
     :param get_team: function, takes a play and returns the team associated with it
     :param count_play: function, takes a play and returns True if it is a tally for the given accumulator's definition.
     """
-    __metaclass__ = ABCMeta
   
     def __init__(self, get_team=None, count_play=None):
         super(TeamIncrementor, self).__init__()
@@ -73,7 +76,7 @@ class TeamIncrementor(AccumulateStats):
                     self.tally[i][team] = 0
       
             try:
-                new_tally = { k:v for k,v in self.tally[len(self.tally)-1].iteritems() }
+                new_tally = { k:v for k,v in list(self.tally[len(self.tally)-1].items()) }
                 new_tally['period'] = play.period
                 new_tally['time'] = play.time
                 new_tally[team] += 1
@@ -173,7 +176,7 @@ class Corsi(EvenStShotAttCt):
         :returns: dict, ``{ 'home_name': %, 'away_name': % }``
         """
         tot = sum(self.total.values())
-        return { k: v/float(tot) for k,v in self.total.iteritems() }
+        return { k: old_div(v,float(tot)) for k,v in list(self.total.items()) }
 
 
 class ShootOut(ShotEventTallyBase):
@@ -287,4 +290,4 @@ class Fenwick(ShotEventTallyBase):
         :rtype: dict, ``{ 'home_name': %, 'away_name': % }``
         """
         tot = sum(self.total.values())
-        return { k: v/float(tot) for k,v in self.total.iteritems() }
+        return { k: old_div(v,float(tot)) for k,v in list(self.total.items()) }

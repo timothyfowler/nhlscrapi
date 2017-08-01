@@ -1,5 +1,7 @@
 
 
+from builtins import str
+from builtins import object
 from nhlscrapi._tools import build_enum
 
 
@@ -94,7 +96,7 @@ class Penalty(Event):
         
 class Turnover(Event):
     """Base class for Takeaway and Giveaway events. Not meant to be used directly"""
-    class TOType:
+    class TOType(object):
         Takeaway = 0
         Giveaway = 1
         

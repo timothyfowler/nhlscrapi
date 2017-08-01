@@ -1,4 +1,6 @@
+from __future__ import division
 
+from past.utils import old_div
 from nhlscrapi.scrapr.faceoffrep import FaceOffRep
 from nhlscrapi.games.repscrwrap import RepScrWrap, dispatch_loader
 
@@ -121,7 +123,7 @@ class FaceOffComparison(RepScrWrap):
         """
         tots = self.team_totals
         return {
-            t: tots[t]['won']/(1.0*tots[t]['total']) if tots[t]['total'] else 0.0
+            t: old_div(tots[t]['won'],(1.0*tots[t]['total'])) if tots[t]['total'] else 0.0
             for t in [ 'home', 'away' ]
         }
         
@@ -135,7 +137,7 @@ class FaceOffComparison(RepScrWrap):
         bz = self.by_zone
         return {
             t: {
-                z: bz[t][z]['won']/(1.0*bz[t][z]['total']) if bz[t][z]['total'] else 0.0
+                z: old_div(bz[t][z]['won'],(1.0*bz[t][z]['total'])) if bz[t][z]['total'] else 0.0
                 for z in self.__zones
                 if z != 'all'
             }
@@ -150,7 +152,7 @@ class FaceOffComparison(RepScrWrap):
                 for z in self.__zones
             }
             
-            for _, d in fos.items():
+            for _, d in list(fos.items()):
                 for z in self.__zones:
                     r[z]['won'] += d[z]['won']
                     r[z]['total'] += d[z]['total']

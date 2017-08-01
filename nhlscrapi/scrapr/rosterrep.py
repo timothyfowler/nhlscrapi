@@ -56,7 +56,7 @@ class RosterRep(ReportLoader):
                 txt[2] = ' '.join(s.strip() for s in txt[2].split(' ') if no_letter(s))
 
                 # need some unique key
-                num = int(txt[0]) if txt[0].isdigit() else len(r.keys())
+                num = int(txt[0]) if txt[0].isdigit() else len(list(r.keys()))
                 r[num] = { 'position': txt[1], 'name': txt[2] }
 
         return r

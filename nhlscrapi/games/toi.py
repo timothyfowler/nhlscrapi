@@ -1,4 +1,5 @@
 
+from builtins import object
 from nhlscrapi.scrapr.toirep import HomeTOIRep, AwayTOIRep
 from nhlscrapi.games.repscrwrap import RepScrWrap, dispatch_loader
 
@@ -76,7 +77,7 @@ class TOI(RepScrWrap):
     def __wrap(self, shift_d):
         return {
             player_num: ShiftSummary(**summ)
-            for player_num, summ in shift_d.items()
+            for player_num, summ in list(shift_d.items())
         }
     
     @property

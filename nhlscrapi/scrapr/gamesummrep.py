@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from nhlscrapi._tools import to_int
 from nhlscrapi._tools import split_time
@@ -34,7 +35,7 @@ class GameSummRep(ReportLoader):
     main = lx_doc.xpath('//*[@id="MainTable"]')[0]
     scr_summ = main.xpath('child::tr[4]//tr')
     for r in scr_summ:
-      print r.get('class')
+      print(r.get('class'))
       if r.get('class') in ['oddColor','evenColor']:
         tds = r.xpath('./td')
         scr = [td.xpath('text()') for td in tds[:8]]
@@ -62,18 +63,18 @@ class GameSummRep(ReportLoader):
         
         
         scorer = self.__scorer(scr[5][0])
-        if scorer['num'] in goals[gn][
-        assists = []
-        for s in scr[6:8]:
-          if s and s[0] != u'\xa0':
-            print s[0], self.__scorer(s[0])
-            assists.append(self.__scorer(s[0]))
+        if scorer['num'] in goals[gn]:
+          assists = []
+          for s in scr[6:8]:
+            if s and s[0] != u'\xa0':
+              print(s[0], self.__scorer(s[0]))
+              assists.append(self.__scorer(s[0]))
           
-        print {
+        print({
           'goal_num': gn,
           'scorer': scorer,
           'assists': assists
-        }
+        })
         
         
 

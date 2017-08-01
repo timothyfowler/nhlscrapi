@@ -1,4 +1,5 @@
 
+from builtins import object
 import re
 
 from lxml.html import fromstring
@@ -8,17 +9,16 @@ from nhlscrapi.scrapr import teamnameparser as TP
 
 # enforce one method interface that fully parses doc
 from abc import ABCMeta, abstractmethod
+from future.utils import with_metaclass
 
 
-class ReportLoader(object):
+class ReportLoader(with_metaclass(ABCMeta, object)):
     """
     Base class for objects that load full reports. Manages html request and extracts match up from banner
     
     :param game_key: unique game identifier of type :py:class:`nhlscrapi.games.game.GameKey`
     :param report_type: str, type of report being loaded. Must be a method of :py:class:`.NHLCn`
     """
-  
-    __metaclass__ = ABCMeta
     __lx_doc = None
  
     def __init__(self, game_key, report_type=''):

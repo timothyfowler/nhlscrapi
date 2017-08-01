@@ -1,4 +1,6 @@
+from __future__ import print_function
 
+from builtins import str
 from nhlscrapi.scrapr.teamnameparser import team_abbr_parser
     
     

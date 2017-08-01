@@ -1,4 +1,6 @@
 
+from builtins import zip
+from builtins import range
 import re
 import json
 
@@ -6,7 +8,7 @@ import json
 # if not, then go through the pain staking of a class.to_json() structure? ugh
 class JSONDataEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, (list, dict, str, unicode, int, float, bool, type(None))):
+        if isinstance(obj, (list, dict, str, int, float, bool, type(None))):
             return json.JSONEncoder.default(self, obj)
         else:
             return obj.__dict__
@@ -14,8 +16,8 @@ class JSONDataEncoder(json.JSONEncoder):
   
 # didn't use built in enum for backwards compat
 def build_enum(*sequential, **named):
-    enums = dict(zip(sequential, range(len(sequential))), **named)
-    reverse = dict((value, key) for key, value in enums.items())
+    enums = dict(list(zip(sequential, list(range(len(sequential))))), **named)
+    reverse = dict((value, key) for key, value in list(enums.items()))
     enums['Name'] = reverse
     return type('Enum', (), enums)
 

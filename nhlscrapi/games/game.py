@@ -1,5 +1,8 @@
+from __future__ import print_function
 
 # used by GameKey
+from builtins import str
+from builtins import object
 import nhlscrapi.constants as C
 from nhlscrapi._tools import build_enum
 

@@ -1,4 +1,7 @@
+from __future__ import division
 
+from builtins import zip
+from past.utils import old_div
 from itertools import chain
 
 from nhlscrapi._tools import (
@@ -14,7 +17,7 @@ def _rem(txt):
     
     
 def _zip_top_bot(txt_lst):
-    cols = len(txt_lst)/2
+    cols = old_div(len(txt_lst),2)
     return [ (k,v) for k, v in zip(txt_lst[:cols],txt_lst[cols:]) ]
     
 

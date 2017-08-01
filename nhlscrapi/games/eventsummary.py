@@ -144,10 +144,10 @@ class EventSummary(RepScrWrap):
             keys = ['g','a','p','pm','pn','pim','s','ab','ms','ht','gv','tk','bs']
             res = { k: 0 for k in keys }
             res['fo'] = { 'won': 0, 'total': 0 }
-            for _, v in d.items():
+            for _, v in list(d.items()):
                 for k in keys:
                     res[k] += v[k]
-                for fi in res['fo'].keys():
+                for fi in list(res['fo'].keys()):
                     res['fo'][fi] += v['fo'][fi]
             return res
             
@@ -163,7 +163,7 @@ class EventSummary(RepScrWrap):
         def each(d):
             return {
                 k: v
-                for k, v in d.items()
+                for k, v in list(d.items())
                 if pl_filter(k, v)
             }
             
@@ -181,8 +181,8 @@ class EventSummary(RepScrWrap):
         """
         def each(d):
             t = [ ]
-            for num, v in d.items():
-                ti = { vk: vv for vk, vv in v.items() }
+            for num, v in list(d.items()):
+                ti = { vk: vv for vk, vv in list(v.items()) }
                 ti['num'] = num
                 t.append(ti)
             

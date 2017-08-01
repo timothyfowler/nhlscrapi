@@ -1,4 +1,5 @@
 
+from builtins import object
 from functools import wraps
 from abc import ABCMeta, abstractmethod
 
